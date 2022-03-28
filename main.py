@@ -1,10 +1,7 @@
-import requests
 import os
 from dotenv import dotenv_values
-import datetime
 import time
 from pathlib import Path
-from urllib.parse import urlparse
 
 import telegram
 
