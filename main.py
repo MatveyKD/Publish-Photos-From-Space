@@ -1,7 +1,6 @@
 import os
 from dotenv import dotenv_values
 import time
-from pathlib import Path
 
 import telegram
 
