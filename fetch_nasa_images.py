@@ -1,15 +1,20 @@
 import requests
 import os
+from pathlib import Path
 from urllib.parse import urlparse
+from datetime import datetime
 
 
-def load_image(url, path, payload=None):    
+def load_image(url, path, payload=None):
     response = requests.get(url, params=payload)
     response.raise_for_status()
     with open(path, 'wb') as file:
         file.write(response.content)
 
+
 def fetch_nasa_images(path, api_key):
+    Path(path).mkdir(parents=True, exist_ok=True)
+
     url = "https://api.nasa.gov/planetary/apod"
     payload = {
         "api_key": api_key,
@@ -24,10 +29,14 @@ def fetch_nasa_images(path, api_key):
             with open(path + "nasa" + str(index) + get_file_type(image_link["url"]), "wb") as file:
                 file.write(response.content)
 
+
 def get_file_type(url):
     return os.path.splitext(urlparse(url).path)[1]
 
+
 def fetch_nasa_epic_images(path, api_key):
+    Path(path).mkdir(parents=True, exist_ok=True)
+
     url = "https://api.nasa.gov/EPIC/api/natural"
     payload = {
         "api_key": api_key,
@@ -39,7 +48,7 @@ def fetch_nasa_epic_images(path, api_key):
 
     for index, launch in enumerate(epic_launches):
         image_name = launch["image"]
-        image_date = image_name[8:12:]+"/"+image_name[12:14:]+"/"+image_name[14:16:]
+        image_date = str(datetime.fromisoformat(launch["date"]).date()).replace("-", "/")
         url = f"https://api.nasa.gov/EPIC/archive/natural/{image_date}/png/{image_name}.png"
         payload = {
             "api_key": api_key,
