@@ -14,5 +14,5 @@ def fetch_spacex_images(path):
     for index, image_link in enumerate(images_links):
         response = requests.get(image_link)
         response.raise_for_status()
-        with open(f"{path}spacex{str(index)}.jpg", 'wb') as file:
+        with open(f"{path}spacex{index}.jpg", 'wb') as file:
             file.write(response.content)
