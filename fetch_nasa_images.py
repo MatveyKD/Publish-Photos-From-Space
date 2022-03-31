@@ -26,7 +26,7 @@ def fetch_nasa_images(path, api_key):
         if image_link["media_type"] != "video":
             response = requests.get(image_link["url"])
             response.raise_for_status()
-            with open(path + "nasa" + str(index) + get_file_type(image_link["url"]), "wb") as file:
+            with open("{}nasa{}{}".format(path, index, get_file_type(image_link["url"])), "wb") as file:
                 file.write(response.content)
 
 
