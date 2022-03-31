@@ -1,6 +1,7 @@
 import os
 from dotenv import dotenv_values
 import time
+from pathlib import Path
 
 import telegram
 
@@ -11,9 +12,10 @@ from fetch_spacex_images import fetch_spacex_images
 if __name__ == "__main__":
     bot = telegram.Bot(dotenv_values(".env")["BOT_TOKEN"])
     api_key = dotenv_values(".env")["API_KEY"]
-    dirs = ["spacex",
-            "nasa",
-            "epic"
+    dirs = [
+        "spacex",
+        "nasa",
+        "epic"
     ]
     for directory in dirs:
         Path(f"images/{directory}").mkdir(parents=True, exist_ok=True)
